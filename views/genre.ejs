@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title%></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="home-screen">
+      <%- include('./partials/sidebar') %>
+      <div class="catalog">
+        <h1>All Games in <%= title%></h1>
+        <ul class="indent">
+            <% for(const game of games){ %>
+               <li> <a href = "/catalog/game/<%= game._id%>"><%= game.name%> </a></li>
+            <%}%>
+        </ul>
+        <% if(games.length === 0) {%>
+            <h3>No games in this genre right now but you can add some!!!</h3>
+        <% }%>
+    </div>
+    </div>
+  </body>
+</html>

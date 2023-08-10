@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="home-screen">
+      <%- include('./partials/sidebar') %>
+      <div class="catalog">
+        <h1>Welcome to The <%= title %></h1>
+        <ul class="indent">
+          <li>Number of games currently in our inventory: <%= game_count %></li>
+          <li>Number of creators: <%= author_count %></li>
+          <li>Number of genres: <%= genre_count %></li>
+        </ul>
+    </div>
+    </div>
+  </body>
+</html>

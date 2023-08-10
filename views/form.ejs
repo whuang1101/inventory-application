@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title%></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="home-screen">
+      <%- include('./partials/sidebar') %>
+      <div class="catalog">
+        <form method="post" action ="">
+            <h1 class="new"><%= title%></h1>
+            <% if(title === "Create Genre") {%>
+            <div class="add-genre">
+                <label for="name">New Genre:</label>
+                <input type="text" name="name" value="<%= genre === undefined ? '' : genre.name %>">
+            </div>
+            <% }%>
+            <% if(title === "Create Creator") {%>
+              <div class="add-creator">
+                <label for="name">New Creator:</label>
+                <input type="text" name="name" value="<%= creator === undefined ? '' : creator.name %>">
+                <label for="date_of_creation">Founded Date:</label>
+                <input type="date" name="date_of_creation" value="<%= creator === undefined ? '' : creator.date_of_creation %>">
+              </div>
+
+              <% }%>
+            <input type="submit" value="submit" >
+            <% if (errors !== undefined) { %>
+              <% for (const error of errors) { %>
+                <p><%= error.msg %></p>
+              <% } %>
+            <% } %>
+
+        </form>
+
+        </div>
+    </div>
+  </body>
+</html>

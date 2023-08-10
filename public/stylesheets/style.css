@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.home-screen {
+  padding: 3em;
+  padding-top : 0;
+  background-image: linear-gradient(to bottom, black, white);
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.catalog {
+  display: flex;
+  flex:8;
+  flex-direction: column;
+  gap: .5em;
+  font-size: 1.5em;
+  position: relative;
+}
+.add-all, .query-all {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid white;
+}
+.side-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 1.3em;
+}
+.indent {
+  padding-left: 3em;
+}
+a{
+  color:white
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  position: absolute;
+  height: 20em;
+  width: 30em;
+  background-color: black;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}

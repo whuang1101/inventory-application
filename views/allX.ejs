@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="home-screen">
+      <%- include('./partials/sidebar') %>
+      <div class="catalog">
+        <h1>All <%= title %></h1>
+        <ul class="indent">
+            <% for (const x of neutral) { %>
+              <li> 
+                  <a href="<%= url %><%=x._id%>"> <%= x.name %>   </a>
+                <% if (x.date_of_creation !== undefined) { %>
+                    (Founded: <%= x.date_of_creation.getFullYear() %>)
+                <% } %>
+                <% if(title === "Games") {%>    
+                    Price: $<%= x.price %>
+                <% }%>                
+                </li>
+            <% } %>
+            </ul>          
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> <%= title.name %> </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="home-screen">
+      <%- include('./partials/sidebar') %>
+      <div class="catalog">
+        <h1><%= title.name %></h1>
+        <h3>Founded in: <%= title.date_of_creation.getFullYear() %></h3>
+        <h3>Games Produced By this Developer: </h3>
+            <ul class="indent">
+              <% for (const game of title.games) {%>
+                  <li> <a href = "/catalog/game/<%= game._id%>"><%= game.name%> </a></li>
+                <% }%>
+            </ul>          
+    </div>
+    </div>
+  </body>
+</html>
