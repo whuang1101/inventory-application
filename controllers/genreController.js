@@ -23,7 +23,7 @@ exports.genre_create_get = asyncHandler(async (req, res, next) => {
   
 // Handle Author create on POST.
 exports.genre_create_post = [
-    // Validate and sanitize the name field.
+    
     body("name", "Genre name must contain at least 3 characters")
       .trim()
       .isLength({ min: 3 })
@@ -36,6 +36,7 @@ exports.genre_create_post = [
       const genre = new Genre({ name: req.body.name });
   
       if (!errors.isEmpty()) {
+        console.log(errors)
         // There are errors. Render the form again with sanitized values/error messages.
         res.render("form", {
           title: "Create Genre",

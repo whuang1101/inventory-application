@@ -25,12 +25,43 @@
               </div>
 
               <% }%>
+              <% if (title === "Create Game") {%>
+                <div class="add-game">
+                  <label for="name">New Game:</label>
+                  <input type="text" name="name" value="<%= game === undefined ? '' : game.name %>" required>
+                  <label for="creator">Creator :</label>
+                  <select name="creator" id="creator" aria-placeholder = "Select a creator" required >
+                    <option disabled selected value="">Select a Creator...</option>
+                    <% for (let i = 0; i < creator.length; i ++) {%>
+                      <option value="<%= creator[i]._id%>"><%= creator[i].name%></option>
+                      <% }%>
+                  </select>
+                  <label for="genre">Genre: </label>
+                  <select name="genre" id="genre" required>
+                    <option disabled selected value="">Select a Genre...</option>
+                    <% for (let i = 0; i < genre.length; i ++) {%>
+                      <option value="<%= genre[i]._id%>"><%= genre[i].name%></option>
+                      <% }%>
+                  </select>
+                  <label for="description">Description (optional)</label>
+                  <textarea id="description" name="description" rows="3" cols="10" >
+                    <%= game === undefined ? '' : game.description %>
+                  </textarea>
+                  <label for="price">Price:</label>
+                  <input type="number" name="price" value ="<%= game === undefined ? '' : game.price %>">
+                </div>
+              <% }%>
             <input type="submit" value="submit" >
-            <% if (errors !== undefined) { %>
+            <% if (errors !== undefined && (title === "Create Creator" || title === "Create Genre")) { %>
               <% for (const error of errors) { %>
                 <p><%= error.msg %></p>
               <% } %>
             <% } %>
+            <% if (errors !== undefined && title === "Create Game") { %>
+                <% for(let i = 0; i < errors.errors.length; i ++){%>
+               <p> <%= errors.errors[i].msg %></p>
+               <% }%>
+              <% } %>
 
         </form>
 
