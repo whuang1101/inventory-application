@@ -35,8 +35,10 @@ exports.game_list = asyncHandler(async(req, res, next) => {
 exports.game_detail = asyncHandler(async (req, res,next) => {
     const gameId = req.params.id;
     console.log(gameId);
+    const url = await Game.find({_id: gameId});
     const game = await Game.find({_id: gameId}).populate("creator").populate("genre").exec();
-    res.render("game",{title:game[0].name, gameInfo: game});
+    res.render("game",{title:game[0].name, gameInfo: game, urlInfo: url});
+    console.log(url)
 })
 
 exports.game_create_get = asyncHandler(async (req, res, next) => {

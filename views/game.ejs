@@ -10,9 +10,9 @@
       <div class="catalog">
         <h1><%= title %></h1>
             <ul class="indent">
-                <li>Creator: <%= gameInfo[0].creator.name%> </li>
+                <li>Creator: <a href="/catalog/creator/<%= urlInfo[0].creator%>"><%= gameInfo[0].creator.name%> </a></li>
                 <li>Description: <%= gameInfo[0].description%> </li>
-                <li>Genre: <%= gameInfo[0].genre[0].name%> </li>
+                <li>Genre: <a href ="/catalog/genre/<%= urlInfo[0].genre%>"><%= gameInfo[0].genre[0].name%> </a></li>
                 <li>Price: $<%= gameInfo[0].price %></li>
             </ul>          
     </div>
