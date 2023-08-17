@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Delete <%= main.name %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="home-screen">
+      <%- include('./partials/sidebar') %>
+      <div class="catalog">
+        <form method="post" action ="">
+            <h1 class="new">Are you sure you want to delete <%=title%> <%= main.name%>?</h1>
+            <div class="add-genre">
+                <input type="radio" id="yes" name="delete" value="yes">
+                <label for="yes">Yes</label>
+                <input type="radio" id="no" name="delete" value="no">
+                <label for="no">No</label>
+                <input type="submit" value="Submit">
+            </div>
+    </div>
+    </div>
+  </body>
+</html>

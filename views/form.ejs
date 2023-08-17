@@ -10,7 +10,7 @@
       <div class="catalog">
         <form method="post" action ="">
             <h1 class="new"><%= title%></h1>
-            <% if(title === "Create Genre") {%>
+            <% if(title === "Create Genre" || title=== "Update Genre") {%>
             <div class="add-genre">
                 <label for="name">New Genre:</label>
                 <input type="text" name="name" value="<%= genre === undefined ? '' : genre.name %>">
@@ -21,34 +21,51 @@
                 <label for="name">New Creator:</label>
                 <input type="text" name="name" value="<%= creator === undefined ? '' : creator.name %>">
                 <label for="date_of_creation">Founded Date:</label>
-                <input type="date" name="date_of_creation" value="<%= creator === undefined ? '' : creator.date_of_creation %>">
+                <input type="date" name="date_of_creation" value="<%= creator === undefined ? '' : creator.date_of_creation.toISOString().substring(0,10) %>">
               </div>
 
               <% }%>
-              <% if (title === "Create Game") {%>
+              <% if (title === "Create Game" || title === "Update Game") {%>
                 <div class="add-game">
-                  <label for="name">New Game:</label>
+                  <label for="name">Title:</label>
                   <input type="text" name="name" value="<%= game === undefined ? '' : game.name %>" required>
                   <label for="creator">Creator :</label>
                   <select name="creator" id="creator" aria-placeholder = "Select a creator" required >
                     <option disabled selected value="">Select a Creator...</option>
                     <% for (let i = 0; i < creator.length; i ++) {%>
+                      <%if (game !== undefined) {%>
+                      <% if(creator[i]._id.equals(game.creator)) {%>
+                        <option value="<%= creator[i]._id%>" selected><%= creator[i].name%></option>
+                        <% } else {%>
                       <option value="<%= creator[i]._id%>"><%= creator[i].name%></option>
+                      <%}%>
+                      <%} else {%>
+                        <option value="<%= creator[i]._id%>"><%= creator[i].name%></option>
+                        <%}%>
+                      
                       <% }%>
                   </select>
                   <label for="genre">Genre: </label>
                   <select name="genre" id="genre" required>
                     <option disabled selected value="">Select a Genre...</option>
                     <% for (let i = 0; i < genre.length; i ++) {%>
+                      <%if (game !== undefined) {%>
+                      <%if(genre[i]._id.equals(game.genre[0])) {%>
+                        <option value="<%= genre[i]._id%>" selected><%= genre[i].name%></option>
+                        <%} else {%>
                       <option value="<%= genre[i]._id%>"><%= genre[i].name%></option>
+                      <% }%>
+                      <% } else {%>
+                        <option value="<%= genre[i]._id%>"><%= genre[i].name%></option>
+                        <%}%>
                       <% }%>
                   </select>
                   <label for="description">Description (optional)</label>
-                  <textarea id="description" name="description" rows="3" cols="10" >
-                    <%= game === undefined ? '' : game.description %>
-                  </textarea>
+                  <textarea id="description" name="description" rows="3" cols="10" ><%= game === undefined ? '' : game.description %></textarea>
                   <label for="price">Price:</label>
                   <input type="number" name="price" value ="<%= game === undefined ? '' : game.price %>">
+                  <label for="stock">Number in Stock:</label>
+                  <input type="number" name="stock" value ="<%= game === undefined ? '' : game.number_in_stock %>">
                 </div>
               <% }%>
             <input type="submit" value="submit" >

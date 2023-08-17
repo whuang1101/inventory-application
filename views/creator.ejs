@@ -10,12 +10,24 @@
       <div class="catalog">
         <h1><%= title.name %></h1>
         <h3>Founded in: <%= title.date_of_creation.getFullYear() %></h3>
+        <%if (games.length !==0) { %>
         <h3>Games Produced By this Developer: </h3>
+        <% }%>
             <ul class="indent">
-              <% for (const game of title.games) {%>
+              <% for (const game of games) {%>
                   <li> <a href = "/catalog/game/<%= game._id%>"><%= game.name%> </a></li>
                 <% }%>
-            </ul>          
+                <%if (games.length ===0) { %>
+                  <h3>No Games made by this creator!</h3>
+                <% }%>
+            </ul>
+            <% if (games.length === 0) {%>
+            <h5><a href="/catalog/creator/<%= title._id%>/delete">Delete Creator</a></h5>
+            <% }%>
+          <h5><a href="/catalog/creator/<%= title._id%>/update">Update Creator</a></h5>
+          <% if (games.length !== 0) {%>
+            <h5>There must be no games made by this creator for you to delete it.</h5>
+          <% }%>
     </div>
     </div>
   </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>All <%= title %></title>
+    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
@@ -14,7 +14,10 @@
                 <li>Description: <%= gameInfo[0].description%> </li>
                 <li>Genre: <a href ="/catalog/genre/<%= urlInfo[0].genre%>"><%= gameInfo[0].genre[0].name%> </a></li>
                 <li>Price: $<%= gameInfo[0].price %></li>
-            </ul>          
+                <li>Number in Stock: <%= gameInfo[0].number_in_stock %></li>
+            </ul>
+          <h5><a href="/catalog/game/<%= gameInfo[0]._id%>/delete">Delete Game </a></h5>
+          <h5><a href="/catalog/game/<%= gameInfo[0]._id%>/update">Update Game </a></h5>      
     </div>
     </div>
   </body>

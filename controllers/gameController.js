@@ -2,7 +2,8 @@ const Game = require('../models/game');
 const Genre = require('../models/genre');
 const Creator = require('../models/creator');
 const asyncHandler = require('../node_modules/express-async-handler');
-const {body, validationResult} = require("express-validator")
+const {body, validationResult} = require("express-validator");
+const game = require('../models/game');
 
 exports.index = asyncHandler(async (req, res, next) => {
     const [
@@ -54,14 +55,15 @@ exports.game_create_post = [
 
     body("name", "Game name must have at least 1 character").trim().isLength({ min: 1 }).escape(),
     body("price", "Price cannot be left blank").trim().isLength({ min: 1 }).escape(),
-
+    body("stock", "Stock cannot be left blank").trim().isLength({ min: 1 }).escape(),
+    body("description").trim().escape,
     asyncHandler(async(req,res,next) => {
         const [allCreators, allGenres] = await Promise.all([
             Creator.find().exec(),
             Genre.find().exec(),
         ])
         const errors = validationResult(req);
-        const game = new Game({name:req.body.name, creator: req.body.creator, description: req.body.description, genre: req.body.genre, price:req.body.price})
+        const game = new Game({name:req.body.name, creator: req.body.creator, description: req.body.description, genre: req.body.genre, price:req.body.price, number_in_stock: req.body.stock})
         if (!errors.isEmpty()){
             console.log(errors)
             res.render("form", {
@@ -86,19 +88,77 @@ exports.game_create_post = [
 
 
 exports.game_delete_get = asyncHandler(async (req, res, next) => {
-res.send("NOT IMPLEMENTED: Game delete GET");
+    const gameId = req.params.id;
+    const oneGame = await Game.findOne({_id: gameId}).exec();
+    console.log(oneGame)
+    res.render("delete.ejs", {title: "the game", main:oneGame});
 });
 
 
 exports.game_delete_post = asyncHandler(async (req, res, next) => {
-res.send("NOT IMPLEMENTED: Game delete POST");
+    const validation = req.body.delete;
+    const gameId = req.params.id;
+    console.log(validation);
+    if(validation === "yes"){
+        const oneGame = await Game.deleteOne({_id: gameId});
+        if(oneGame.deletedCount === 1){
+            console.log("Game deleted successfully");
+        }
+        else{
+            console.log("failed to delete");
+        }
+    }
+    else {
+        const game = Game.findOne({_id: gameId}).exec();
+        console.log(game);
+        res.redirect(`/catalog/game/${gameId}`);
+    }
 });
 
 exports.game_update_get = asyncHandler(async (req, res, next) => {
-res.send("NOT IMPLEMENTED: Game update GET");
+    const [allCreators, allGenres, game] = await Promise.all([
+        Creator.find().exec(),
+        Genre.find().exec(),
+        Game.findOne({_id:req.params.id}).exec()
+    ])
+    console.log(game.genre, allCreators[1]._id);
+    res.render("form", {title: "Update Game", game: game, errors: undefined, creator: allCreators, genre:allGenres,})
 });
 
 // Handle Author update on POST.
-exports.game_update_post = asyncHandler(async (req, res, next) => {
-res.send("NOT IMPLEMENTED: Game update POST");
-});
+exports.game_update_post = [
+    body("name", "Game name must have at least 1 character").trim().isLength({ min: 1 }).escape(),
+    body("price", "Price cannot be left blank").trim().isLength({ min: 1 }).escape(),
+    body("stock", "Stock cannot be left blank").trim().isLength({ min: 1 }).escape(),
+    body("description").trim().escape(),
+asyncHandler(async (req, res, next) => {
+    console.log("hi")
+    const [allCreators, allGenres] = await Promise.all([
+        Creator.find().exec(),
+        Genre.find().exec(),
+    ])
+    const errors = validationResult(req);
+    const game = new Game({name:req.body.name, creator: req.body.creator, description: req.body.description, genre: req.body.genre, price:req.body.price, number_in_stock: req.body.stock})
+    if (!errors.isEmpty()){
+        console.log(errors)
+        res.render("form", {
+            title: "Create Game", game: game,errors: errors, creator: allCreators, genre:allGenres
+        })
+        return;
+    }
+    else{
+        const update = {
+            name: game.name,
+            creator: game.creator,
+            description: game.description,
+            genre: game.genre,
+            price: game.price,
+            number_in_stock: game.number_in_stock,
+        }
+        const verify = await Game.updateOne({_id: req.params.id}, update).exec();
+        if(verify.matchedCount === 1){
+            console.log("found the item");
+        }
+        res.redirect(`/catalog/game/${req.params.id}`)
+    }
+})];

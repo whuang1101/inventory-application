@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title%></title>
+    <title><%= title.name%></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <div class="home-screen">
       <%- include('./partials/sidebar') %>
       <div class="catalog">
-        <h1>All Games in <%= title%></h1>
+        <h1>All Games in <%= title.name%></h1>
         <ul class="indent">
             <% for(const game of games){ %>
                <li> <a href = "/catalog/game/<%= game._id%>"><%= game.name%> </a></li>
             <%}%>
         </ul>
+        <h5><a href="/catalog/genre/<%= title._id%>/update">Update Genre</a></h5>
+        <% if (games.length !== 0) {%>
+          <h5>There must be no games in this genre for you to delete it.</h5>
+          <% }%>
         <% if(games.length === 0) {%>
             <h3>No games in this genre right now but you can add some!!!</h3>
+            <h3><a href="/catalog/genre/<%= title._id%>/delete">Delete Genre</a></h3>
         <% }%>
     </div>
     </div>
